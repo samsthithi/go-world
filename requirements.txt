@@ -1,0 +1,13 @@
+arrow==0.13.1
+binaryornot==0.4.4
+certifi==2019.6.16
+Click==7.0
+cookiecutter==1.6.0
+Flask==1.1.1
+itsdangerous==1.1.0
+Jinja2==2.10.1
+jinja2-time==0.2.0
+MarkupSafe==1.1.1
+poyo==0.4.2
+Werkzeug==0.15.5
+whichcraft==0.5.2
