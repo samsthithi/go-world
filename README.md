@@ -37,5 +37,7 @@ conda activate go-world
 
 pip install -r requirements.txt
 
-python server/main.py
+
+To run the server:
+$ python server/app.py
 
