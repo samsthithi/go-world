@@ -63,5 +63,5 @@ class Post(Resource):
 class PostList(Resource):
     @jwt_required()
     def get(self):
-        print(current_identity)
+        # print(current_identity)
         return {'posts': list(map(lambda x: x.json(), PostModel.query.all()))}

@@ -5,22 +5,26 @@ from datetime import datetime
 class PostModel(db.Model):
     __tablename__ = 'posts'
 
+    users = db.relationship('UserModel')
+    group = db.relationship('GroupModel')
+
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'), nullable=False)
 
     date = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     title = db.Column(db.String(140),nullable=False)
     text = db.Column(db.Text,nullable=False)
 
-    group_id = db.Column(db.Integer, db.ForeignKey('groups.id'))
-    group = db.relationship('GroupModel')
 
-    def __init__(self, name, price, group_id):
+    def __init__(self, name, price, user_id, group_id):
         self.name = name
         self.price = price
         self.group_id = group_id
+        self.user_id = user_id
 
     def json(self):
-        return {'name': self.name, 'price': self.price}
+        return {'name': self.title, 'price': self.text}
 
     @classmethod
     def find_by_name(cls, name):
@@ -33,3 +37,6 @@ class PostModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
+    
+    def __repr__(self):
+        return f"Post ID: {self.id} -- Date: {self.date} --- {self.title}"
