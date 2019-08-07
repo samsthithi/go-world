@@ -4,6 +4,8 @@ from flask_jwt import JWT
 
 from security import authenticate, identity
 from resources.user import UserRegister
+from resources.post import Post, PostList
+from resources.group import Group, GroupList
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -21,6 +23,10 @@ def create_tables():
 jwt = JWT(app, authenticate, identity)  # /auth
 
 api.add_resource(UserRegister, '/register')
+api.add_resource(Post, '/post/<string:name>')
+api.add_resource(PostList, '/posts')
+api.add_resource(Group, '/group/<string:name>')
+api.add_resource(GroupList, '/groups')
 
 if __name__ == '__main__':
     from db import db

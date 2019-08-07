@@ -9,6 +9,7 @@ cookiecutter==1.6.0
 Flask==1.1.1
 Flask-API==1.1
 Flask-JWT==0.3.2
+Flask-JWT-Extended==3.21.0
 Flask-Login==0.4.1
 Flask-Migrate==2.5.2
 Flask-RESTful==0.3.7
@@ -21,7 +22,7 @@ jinja2-time==0.2.0
 Mako==1.0.14
 MarkupSafe==1.1.1
 poyo==0.4.2
-PyJWT==1.4.2
+PyJWT==1.7.1
 python-dateutil==2.8.0
 python-editor==1.0.4
 pytz==2019.2
