@@ -1,6 +1,6 @@
 from db import db
 from datetime import datetime
-
+# from models.user import UserModel
 
 class PostModel(db.Model):
     __tablename__ = 'posts'
@@ -16,19 +16,25 @@ class PostModel(db.Model):
     title = db.Column(db.String(140),nullable=False)
     text = db.Column(db.Text,nullable=False)
 
-
-    def __init__(self, name, price, user_id, group_id):
-        self.name = name
-        self.price = price
-        self.group_id = group_id
+    def __init__(self, title, text, user_id, group_id):
+        self.title = title
+        self.text = text
         self.user_id = user_id
+        self.group_id = group_id
 
     def json(self):
-        return {'name': self.title, 'price': self.text}
+        return {
+            'date': self.date.strftime('%m/%d/%Y'),
+            'title': self.title, 
+            'text': self.text, 
+            # 'user_name': UserModel.find_by_id(self.user_id), 
+            'user_name': self.author.username,
+            'group_id': self.group_id
+            }
 
     @classmethod
-    def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
+    def find_by_title(cls, title):
+        return cls.query.filter_by(title=title).first()
 
     def save_to_db(self):
         db.session.add(self)
