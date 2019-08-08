@@ -5,11 +5,17 @@ from models.post import PostModel
 
 class Post(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('title',
-                        type=float,
+    # parser.add_argument('title',
+    #                     # type=text,
+    #                     required=True,
+    #                     help="This field cannot be left blank!"
+    #                     )
+    parser.add_argument('text',
+                        # type=string,
                         required=True,
                         help="This field cannot be left blank!"
                         )
+                    
     parser.add_argument('group_id',
                         type=int,
                         required=True,
@@ -17,19 +23,21 @@ class Post(Resource):
                         )
 
     @jwt_required()
-    def get(self, name):
-        post = PostModel.find_by_name(name)
+    def get(self, title):
+        post = PostModel.find_by_title(title)
         if post:
             return post.json()
         return {'message': 'Post not found'}, 404
 
-    def post(self, name):
-        if PostModel.find_by_name(name):
-            return {'message': "An post with name '{}' already exists.".format(name)}, 400
+    @jwt_required()
+    def post(self, title):
+        if PostModel.find_by_title(title):
+            return {'message': "An post with title '{}' already exists.".format(title)}, 400
 
         data = Post.parser.parse_args()
-
-        post = PostModel(name, **data)
+        data['user_id'] = current_identity.id
+        
+        post = PostModel(title, **data)
 
         try:
             post.save_to_db()
@@ -38,22 +46,22 @@ class Post(Resource):
 
         return post.json(), 201
 
-    def delete(self, name):
-        post = PostModel.find_by_name(name)
+    def delete(self, title):
+        post = PostModel.find_by_title(title)
         if post:
             post.delete_from_db()
             return {'message': 'Post deleted.'}
         return {'message': 'Post not found.'}, 404
 
-    def put(self, name):
+    def put(self, title):
         data = Post.parser.parse_args()
 
-        post = PostModel.find_by_name(name)
+        post = PostModel.find_by_title(title)
 
         if post:
             post.title = data['title']
         else:
-            post = PostModel(name, **data)
+            post = PostModel(title, **data)
 
         post.save_to_db()
 
@@ -63,5 +71,5 @@ class Post(Resource):
 class PostList(Resource):
     @jwt_required()
     def get(self):
-        print(current_identity)
+        print(current_identity.id)
         return {'posts': list(map(lambda x: x.json(), PostModel.query.all()))}

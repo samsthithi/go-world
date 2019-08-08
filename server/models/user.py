@@ -1,4 +1,4 @@
-from db import db
+from db import db,subs
 
 
 class UserModel(db.Model):
@@ -8,6 +8,10 @@ class UserModel(db.Model):
     username = db.Column(db.String(80))
     password = db.Column(db.String(80))
 
+    posts = db.relationship('PostModel', backref='author', lazy=True)
+    groups = db.relationship('GroupModel', secondary=subs,
+                backref=db.backref('members', lazy='dynamic'))
+
     def __init__(self, username, password):
         self.username = username
         self.password = password
@@ -15,6 +19,9 @@ class UserModel(db.Model):
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
+
+    def add_group(self, group):
+        self.groups.append(group)
 
     @classmethod
     def find_by_username(cls, username):
