@@ -56,19 +56,19 @@ class GroupUser(Resource):
         group = GroupModel.find_by_name(data.group_name)
 
         # check if group exit in user.
-        r=1
-        for u in group.members:
-            if u.username == user.username:
-                r=0
+        # r=1
+        # for u in group.members:
+        #     if u.username == user.username:
+        #         r=0
                 # return {'group': data.group_name, 'status': '1User already a member of this group.'}
-        if r==1:
-            group.members.append(user)
-            group.save_to_db()
+        # if r==1:
+        group.members.append(user)
+        group.save_to_db()
 
         # checking if a user is already a member of this group. 
-        for u in user.groups:
-            if u.name == data.group_name:
-                return {'group': data.group_name, 'status': 'User already a member of this group.'}
+        # for u in user.groups:
+        #     if u.name == data.group_name:
+        #         return {'group': data.group_name, 'status': 'User already a member of this group.'}
         user.groups.append(group)
         user.save_to_db()
         return {'group': data.group_name, 'status': 'added'}
