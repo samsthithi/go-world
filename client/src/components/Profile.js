@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import jwt_decode from 'jwt-decode'
+import axios from 'axios'
 
 class Profile extends Component {
     constructor() {
@@ -10,6 +10,15 @@ class Profile extends Component {
     }
 
     componentDidMount () {
+        axios.get('/profile')
+            .then(response => {
+                this.setState({
+                    //     first_name: decoded.identity.first_name,
+                    //     last_name: decoded.identity.last_name,
+                        username: response.data
+                    })
+            })
+            .catch(error => console.log(error));
         // const token = localStorage.usertoken
         // const decoded = jwt_decode(token)
         this.setState({

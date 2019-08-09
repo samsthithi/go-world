@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { login } from './UserFunctions'
+import axios from 'axios'
 
 class Login extends Component {
     constructor() {
@@ -25,9 +25,9 @@ class Login extends Component {
             password: this.state.password
         }
 
-        login(user).then(res => {
-            this.props.history.push(`/profile`)
-        })
+        axios.post('/auth', user)
+            .then(response => {this.props.history.push(`/profile`)})
+            .catch(error => console.log(error));
     }
 
     render () {

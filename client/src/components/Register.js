@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { register } from './UserFunctions'
+// import { register } from './UserFunctions'
+import axios from 'axios'
+
 
 class Register extends Component {
     constructor() {
@@ -23,15 +25,15 @@ class Register extends Component {
         e.preventDefault()
 
         const newUser = {
-            first_name: this.state.first_name,
-            last_name: this.state.last_name,
+            // first_name: this.state.first_name,
+            // last_name: this.state.last_name,
             username: this.state.username,
             password: this.state.password
         };
 
-        register(newUser).then(res => {
-            this.props.history.push(`/login`);
-        });
+        axios.post('/register', newUser)
+            .then(response => {this.props.history.push(`/login`)})
+            .catch(error => console.log(error));
 
         console.log("Registerd!");
     }
