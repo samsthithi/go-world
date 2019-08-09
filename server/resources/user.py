@@ -27,6 +27,18 @@ class UserRegister(Resource):
         user.save_to_db()
         return {"message": "User created successfully."}, 201
 
+class Profile(Resource):
+    """Profile page of the user.
+    """
+    @jwt_required()
+    def get(self):
+        """This will return the user details of the logged in user,
+        which will be shown in the profile page.
+        """
+        # user = UserModel.find_by_username(current_identity.name)
+        return current_identity.json()
+        
+
 class UserGroups(Resource):
     """Return list of all the groups of a particular user.
     """
