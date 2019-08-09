@@ -23,6 +23,12 @@ class UserModel(db.Model):
     def add_group(self, group):
         self.groups.append(group)
 
+    def json(self):
+        return {
+                'username': self.username,
+                'id': self.id
+            }
+
     @classmethod
     def find_by_username(cls, username):
         return cls.query.filter_by(username=username).first()

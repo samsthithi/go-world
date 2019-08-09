@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_jwt import JWT
 
 from security import authenticate, identity
-from resources.user import UserRegister, UserGroups
+from resources.user import UserRegister, UserGroups, Profile
 from resources.post import Post, PostList
 from resources.group import Group, GroupList, GroupPosts, GroupUser
 
@@ -31,6 +31,8 @@ api.add_resource(GroupList, '/groups')
 api.add_resource(GroupPosts, '/group_posts/<string:name>')
 api.add_resource(GroupUser, '/group_user')
 api.add_resource(UserGroups, '/user_groups')
+api.add_resource(Profile, '/profile')
+
 
 if __name__ == '__main__':
     from db import db
