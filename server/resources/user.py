@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt import jwt_required, current_identity
 from models.user import UserModel
 
 
@@ -25,3 +26,12 @@ class UserRegister(Resource):
         user = UserModel(data['username'], data['password'])
         user.save_to_db()
         return {"message": "User created successfully."}, 201
+
+class UserGroups(Resource):
+    """Return list of all the groups of a particular user.
+    """
+    @jwt_required()
+    def get(self):
+        user = current_identity
+        print(user.groups)
+        return {'groups':[g.name for g in user.groups]}

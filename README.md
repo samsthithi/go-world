@@ -41,3 +41,6 @@ pip install -r requirements.txt
 To run the server:
 $ python server/app.py
 
+
+
+Currently our groups does not have any admin/owner.
