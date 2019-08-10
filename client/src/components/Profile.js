@@ -4,32 +4,33 @@ import axios from 'axios'
 class Profile extends Component {
     constructor() {
         super()
+        this.token=sessionStorage.getItem("access_token")
         this.state = {
-            username: ''
+            username: '',
+            
         }
     }
 
-    componentDidMount () {
-        axios.get('/profile')
+    componentDidMount() {
+        // console.log(this.props)
+        var yourConfig = {
+            headers: {
+               Authorization: "JWT " + this.token
+            }
+         }
+        console.log(this.token)
+        console.log("Mohit")
+        axios.get('/profile',yourConfig)
             .then(response => {
+               console.log(response.data)
                 this.setState({
-                    //     first_name: decoded.identity.first_name,
-                    //     last_name: decoded.identity.last_name,
-                        username: response.data
-                    })
+                    username: response.data.username
+                })
             })
             .catch(error => console.log(error));
-        // const token = localStorage.usertoken
-        // const decoded = jwt_decode(token)
-        this.setState({
-        //     first_name: decoded.identity.first_name,
-        //     last_name: decoded.identity.last_name,
-            username: ''
-        })
-        // decoded.identity.username
     }
 
-    render () {
+    render() {
         return (
             <div className="container">
                 <div className="jumbotron mt-5">

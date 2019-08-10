@@ -13,11 +13,11 @@ class Login extends Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    onChange (e) {
+    onChange(e) {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    onSubmit (e) {
+    onSubmit(e) {
         e.preventDefault()
 
         const user = {
@@ -26,11 +26,16 @@ class Login extends Component {
         }
 
         axios.post('/auth', user)
-            .then(response => {this.props.history.push(`/profile`)})
+            .then(response => {
+                // console.log(response)
+                alert(response.data.access_token)
+                sessionStorage.setItem("access_token",response.data.access_token);
+                this.props.history.push(`/profile`)
+            })
             .catch(error => console.log(error));
     }
 
-    render () {
+    render() {
         return (
             <div className="container">
                 <div className="row">
