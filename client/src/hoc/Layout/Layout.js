@@ -1,23 +1,38 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Aux from '../Aux/Aux'
-import Auth from '../../containers/Auth/Auth';
-import NavBar from '../../components/Navigation/Navigation';
-class Layout extends Component {
-    render () {
 
+import Aux from '../Aux/Aux';
+import classes from './Layout.css';
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+
+class Layout extends Component {
+    state = {
+        showSideDrawer: false
+    }
+
+    sideDrawerClosedHandler = () => {
+        this.setState( { showSideDrawer: false } );
+    }
+
+    sideDrawerToggleHandler = () => {
+        this.setState( ( prevState ) => {
+            return { showSideDrawer: !prevState.showSideDrawer };
+        } );
+    }
+
+    render () {
         return (
             <Aux>
-                <Router>
-                    <div>
-                        <NavBar />
-                        <Route exact path="/" component={Auth} />
-                        {/* {check} */}
-                    </div>
-                </Router>
+                <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
+                <SideDrawer
+                    open={this.state.showSideDrawer}
+                    closed={this.sideDrawerClosedHandler} />
+                <main className={classes.Content}>
+                    {this.props.children}
+                </main>
             </Aux>
-        );
+        )
     }
-};
+}
 
 export default Layout;

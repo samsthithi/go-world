@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Auth from './containers/Auth/Auth';
 import Layout from './hoc/Layout/Layout';
-// import Profile from './containers/Profile/Profile';
+// import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+// import Checkout from './containers/Checkout/Checkout';
+// import Orders from './containers/Orders/Orders';
+import Auth from './containers/Auth/Auth';
 
 class App extends Component {
-  render() {
+  render () {
     return (
-        <div >
-          <Layout>
-            <Switch>
-              <Route exact path='/' Component={Auth} />
-              {/* <Route path='/profile' Component={Profile} /> */}
-            </Switch>
-          </Layout>
-        </div>
+      <div>
+        <Layout>
+          <Switch>
+            {/* <Route path="/checkout" component={Checkout} /> */}
+            {/* <Route path="/orders" component={Orders} /> */}
+            {/* <Route path="/auth" component={BurgerBuilder} /> */}
+            <Route path="/" exact component={Auth} />
+          </Switch>
+        </Layout>
+      </div>
     );
   }
 }
