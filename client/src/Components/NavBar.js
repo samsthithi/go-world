@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 class Navbar extends Component {
     logOut (e) {
         e.preventDefault()
-        localStorage.removeItem('usertoken')
+        localStorage.removeItem('access_token')
         this.props.history.push(`/login`)
     }
 
@@ -60,7 +60,7 @@ class Navbar extends Component {
                             </Link>
                         </li>
                     </ul>
-                    {localStorage.usertoken ? userLink : loginRegLink}
+                    {localStorage.access_token ? userLink : loginRegLink}
                 </div>
             </nav>
         )

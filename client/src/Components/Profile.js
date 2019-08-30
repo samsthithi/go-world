@@ -4,7 +4,7 @@ import axios from 'axios'
 class Profile extends Component {
     constructor() {
         super()
-        this.token=sessionStorage.getItem("access_token")
+        this.token = localStorage.getItem("access_token")
         this.state = {
             username: '',
             
@@ -19,7 +19,7 @@ class Profile extends Component {
             }
          }
         console.log(this.token)
-        console.log("Mohit")
+        // console.log("Mohit")
         axios.get('/profile',yourConfig)
             .then(response => {
                console.log(response.data)

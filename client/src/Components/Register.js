@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+// import { register } from './UserFunctions'
 import axios from 'axios'
 
-class Login extends Component {
+
+class Register extends Component {
     constructor() {
         super()
         this.state = {
+            // first_name: '',
+            // last_name: '',
             username: '',
             password: ''
         }
@@ -13,35 +17,34 @@ class Login extends Component {
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    onChange(e) {
+    onChange (e) {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    onSubmit(e) {
+    onSubmit (e) {
         e.preventDefault()
 
-        const user = {
+        const newUser = {
+            // first_name: this.state.first_name,
+            // last_name: this.state.last_name,
             username: this.state.username,
             password: this.state.password
-        }
+        };
 
-        axios.post('/auth', user)
-            .then(response => {
-                // console.log(response)
-                alert(response.data.access_token)
-                sessionStorage.setItem("access_token",response.data.access_token);
-                this.props.history.push(`/profile`)
-            })
+        axios.post('/register', newUser)
+            .then(response => {this.props.history.push(`/login`)})
             .catch(error => console.log(error));
+
+        console.log("Registerd!");
     }
 
-    render() {
+    render () {
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-md-6 mt-5 mx-auto">
                         <form noValidate onSubmit={this.onSubmit}>
-                            <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+                            <h1 className="h3 mb-3 font-weight-normal">Register</h1>
                             <div className="form-group">
                                 <label htmlFor="username">username</label>
                                 <input type="username"
@@ -60,9 +63,8 @@ class Login extends Component {
                                     value={this.state.password}
                                     onChange={this.onChange} />
                             </div>
-
                             <button type="submit" className="btn btn-lg btn-primary btn-block" onSubmit={this.onSubmit}>
-                                Sign in
+                                Register
                             </button>
                         </form>
                     </div>
@@ -72,4 +74,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Register;
