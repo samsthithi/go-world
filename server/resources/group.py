@@ -30,6 +30,11 @@ class Group(Resource):
 
         return {'message': 'Group deleted'}
 
+class GroupId(Resource):
+	def get(self, name):
+		group = GroupModel.find_by_name(name)
+		return {'group_id': group.id}
+
 class GroupList(Resource):
     def get(self):
         return {'groups': list(map(lambda x: x.json(), GroupModel.query.all()))}
