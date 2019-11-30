@@ -5,7 +5,7 @@ from flask_jwt import JWT
 from security import authenticate, identity
 from resources.user import UserRegister, UserGroups, Profile
 from resources.post import Post, PostList
-from resources.group import Group, GroupList, GroupPosts, GroupUser
+from resources.group import Group, GroupList, GroupPosts, GroupUser, GroupId
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -27,6 +27,7 @@ api.add_resource(Post, '/post/<string:title>')
 api.add_resource(PostList, '/posts')
 api.add_resource(Group, '/group/<string:name>')
 api.add_resource(GroupList, '/groups')
+api.add_resource(GroupId, '/groupid/<string:name>')
 
 api.add_resource(GroupPosts, '/group_posts/<string:name>')
 api.add_resource(GroupUser, '/group_user')
